@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-"SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
+'SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
@@ -2201,7 +2201,8 @@ SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
-" | /usr/bin/time -v /home/travis/build/mikebrachmann/gprom/src/command_line/gprom -log -loglevel 4 -backend sqlite -db ./debug.db -treeify-algebra-graphs
+\q
+' | /usr/bin/time -v /home/travis/build/mikebrachmann/gprom/src/command_line/gprom -log -loglevel 4 -backend sqlite -db ./debug.db -treeify-algebra-graphs
 
 
 
