@@ -2201,7 +2201,7 @@ SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
 SELECT S.A AS P, U.C AS Q FROM R AS S JOIN T AS U ON S.A = U.C;
-" | /usr/bin/time -v /home/travis/build/mikebrachmann/gprom/gprom-0.0.1/_build/gprom -log -loglevel 4 -backend sqlite -db ./debug.db -treeify-algebra-graphs
+" | /usr/bin/time -v gprom -log -loglevel 4 -backend sqlite -db ./debug.db -treeify-algebra-graphs
 
 
 
