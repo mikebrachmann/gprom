@@ -179,7 +179,7 @@ checkAttributeRefList (List *attrRefs, List *children, QueryOperator *parent)
         if (strcmp(childA->attrName, a->name) != 0)
         {
             ERROR_LOG("attribute ref name and child attrdef names are not the "
-                    "same:", childA->attrName, a->name);
+                    "same: <%s> != <%s>", childA->attrName, a->name);
             ERROR_OP_LOG("parent is",parent);
             DEBUG_NODE_BEATIFY_LOG("details are:", a, childA, parent);
             return FALSE;
@@ -187,12 +187,14 @@ checkAttributeRefList (List *attrRefs, List *children, QueryOperator *parent)
         if (childA->dataType != a->attrType)
         {
             ERROR_LOG("attribute datatype and child attrdef datatypes are not the "
-                    "same: <%s> and <%s>",
+                    "same: <%s> and <%s> for <%s> -> <%s>",
                     DataTypeToString(childA->dataType),
-                    DataTypeToString(a->attrType));
+                    DataTypeToString(a->attrType),
+					childA->attrName,
+                    a->name);
             ERROR_OP_LOG("parent is",parent);
             DEBUG_NODE_BEATIFY_LOG("details are:", a, childA, parent);
-            return FALSE;
+            //return FALSE;
         }
        /* else
         {
@@ -239,9 +241,11 @@ checkSchemaConsistency (QueryOperator *op, void *context)
                 if (typeOf(p) != def->dataType)
                 {
                     ERROR_LOG("schema and projection expression data types should"
-                            " be the same: %s = %s",
+                            " be the same: %s = %s for %s\nOp:%s",
                             DataTypeToString(typeOf(p)),
-                            DataTypeToString(def->dataType));
+                            DataTypeToString(def->dataType),
+							def->attrName,
+							nodeToString(o));
                     DEBUG_LOG("details: %s", beatify(nodeToString(o)));
                     return FALSE;
                 }
@@ -265,7 +269,9 @@ checkSchemaConsistency (QueryOperator *op, void *context)
 
             if (LIST_LENGTH(op->schema->attrDefs) != LIST_LENGTH(child->schema->attrDefs))
             {
-                ERROR_OP_LOG("Number of attributes of a selection operator should match the "
+            	ERROR_LOG("Number of attributes of a selection operator should match the "
+                        "number of attributes of its child: %d != %d", LIST_LENGTH(op->schema->attrDefs) , LIST_LENGTH(child->schema->attrDefs));
+            	ERROR_OP_LOG("Number of attributes of a selection operator should match the "
                         "number of attributes of its child:", op);
                 return FALSE;
             }
@@ -517,7 +523,7 @@ checkParentChildLinks (QueryOperator *op, void *context)
                     " this operator in its parent list",
                     operatorToOverviewString((Node *) o),
                     operatorToOverviewString((Node *) op));
-            return FALSE;
+            //return FALSE;
         }
 //        if (!checkParentChildLinks(o))
 //            return FALSE;

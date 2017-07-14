@@ -143,7 +143,7 @@ log_(LogLevel level, const char *file, unsigned line, const char *template, ...)
 
         if (logCallback != NULL)
         {
-            printf("\nCALL LOGGER ********************************************\n");
+            //printf("\nCALL LOGGER ********************************************\n");
             fflush(stdout);
             logCallback(buffer->data, file, line, level);
             return;
@@ -255,7 +255,7 @@ logNodes_(LogLevel level, const char *file, unsigned line, boolean beat, char * 
 
             va_end(args);
 
-            printf("\nCALL LOGGER ********************************************\n");
+            //printf("\nCALL LOGGER ********************************************\n");
             fflush(stdout);
             logCallback(out->data, file, line, level);
         }

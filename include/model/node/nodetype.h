@@ -202,6 +202,7 @@ extern KeyValue *createNodeKeyValue(Node *key, Node *value);
 /* get a string representation of a node */
 extern char *nodeToString(void *obj);
 extern char *beatify(char *input);
+extern char *jsonify(char *input);
 extern char *operatorToOverviewString(void *op);
 extern char *singleOperatorToOverview (void *op);
 extern char *datalogToOverviewString(void *n);

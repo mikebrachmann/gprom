@@ -17,6 +17,7 @@
 #include "analysis_and_translate/analyzer.h"
 #include "analysis_and_translate/analyze_oracle.h"
 #include "analysis_and_translate/analyze_dl.h"
+#include "analysis_and_translate/analyze_sqlite.h"
 
 // plugin
 static AnalyzerPlugin *plugin = NULL;
@@ -26,6 +27,8 @@ static AnalyzerPlugin *assembleOraclePlugin(void);
 static AnalyzerPlugin *assemblePostgresPlugin(void);
 static AnalyzerPlugin *assembleHivePlugin(void);
 static AnalyzerPlugin *assembleDLPlugin(void);
+static AnalyzerPlugin *assembleSqlitePlugin(void);
+
 
 // wrapper interface
 Node *
@@ -53,6 +56,10 @@ chooseAnalyzerPlugin(AnalyzerPluginType type)
         case ANALYZER_PLUGIN_DL:
             plugin = assembleDLPlugin();
             break;
+        case ANALYZER_PLUGIN_SQLITE:
+			plugin = assembleSqlitePlugin();
+			break;
+
     }
 }
 
@@ -96,6 +103,16 @@ assembleDLPlugin(void)
     return p;
 }
 
+static AnalyzerPlugin *
+assembleSqlitePlugin(void)
+{
+    AnalyzerPlugin *p = NEW(AnalyzerPlugin);
+
+    p->analyzeParserModel = analyzeSqliteModel;
+
+    return p;
+}
+
 void
 chooseAnalyzerPluginFromString(char *type)
 {
@@ -109,6 +126,8 @@ chooseAnalyzerPluginFromString(char *type)
         chooseAnalyzerPlugin(ANALYZER_PLUGIN_HIVE);
     else if (streq(type,"dl"))
         chooseAnalyzerPlugin(ANALYZER_PLUGIN_DL);
+    else if (streq(type,"sqlite"))
+		chooseAnalyzerPlugin(ANALYZER_PLUGIN_SQLITE);
     else
         FATAL_LOG("unkown analyzer plugin type: <%s>", type);
 }

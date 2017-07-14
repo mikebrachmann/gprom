@@ -578,7 +578,7 @@ public abstract class AbstractMetadataLookup {
 		if (dt.equals("VARCHAR") || dt.equals("VARCHAR2")) {
 			return "DT_STRING";
 		}
-		if (dt.equals("INT")) {
+		if (dt.equals("INT") || dt.equals("INTEGER")) {
 			return "DT_INT";
 		}
 		if (dt.equals("DECIMAL")) {
